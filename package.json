@@ -1,0 +1,22 @@
+{
+  "name": "next-i18next-locize",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "downloadLocales": "locize download --project-id=d3b405cf-2532-46ae-adb8-99e88d876733 --ver=latest --clean=true --path=./public/locales",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start -p ${PORT:=3000}"
+  },
+  "dependencies": {
+    "i18next-locize-backend": "4.1.9",
+    "next": "10.0.5",
+    "next-i18next": "8.0.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
+  },
+  "devDependencies": {
+    "locize-cli": "7.6.12",
+    "prop-types": "^15.7.2"
+  }
+}
