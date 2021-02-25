@@ -14,7 +14,8 @@ You may have arrived here from the [NextJs](https://github.com/zeit/next.js) rep
 
 This will download the translations from locize directly, in client (browser) and server (node.js)
 
-**DO NOT USE THIS if having a serverless environment => this will generate too much download requests**
+**DO NOT USE THIS if having a serverless environment => this will generate too much download requests!**
+
 More informations about this [here](https://github.com/locize/i18next-locize-backend#important-advice-for-serverless-environments---aws-lambda-google-cloud-functions-azure-functions-etc)
 
 ```javascript
@@ -38,6 +39,8 @@ module.exports = {
 ```
 
 ### POSSIBILITY 2: bundle translations with app
+
+**If you're not sure, choose this way.**
 
 i.e. for a serverless environment bundle the translations first.
 See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) and use a config like this:
