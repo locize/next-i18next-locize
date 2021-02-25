@@ -40,7 +40,7 @@ module.exports = {
 ### POSSIBILITY 2: bundle translations with app
 
 i.e. for a serverless environment bundle the translations first.
-See [downloadLocales script in package.json](https://github.com/isaachinman/next-i18next/blob/master/package.json#L6) and use a config like this:
+See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) and use a config like this:
 
 ```javascript
 // next-i18next.config.js
