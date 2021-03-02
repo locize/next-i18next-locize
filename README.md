@@ -55,5 +55,5 @@ module.exports = {
 }
 ```
 
-Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the cli to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
+Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the [cli](https://github.com/locize/locize-cli) to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
 This way the translations are bundled in your app and you will not generate any downloads during runtime.
