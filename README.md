@@ -88,7 +88,7 @@ module.exports = {
 
 ### POSSIBILITY 2: bundle translations with app
 
-**If you're not sure, choose this way.**
+#### **If you're not sure, choose this way.**
 
 i.e. for a serverless environment bundle the translations first.
 See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) and use a config like this:
