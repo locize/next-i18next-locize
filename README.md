@@ -39,7 +39,7 @@ module.exports = {
 ```
 
 
-**Optional server side caching to filesystem**
+#### Optional server side caching to filesystem
 
 There is also the possibility to cache the translations to the local filesystem thanks to the [i18next-chained-backend](https://github.com/i18next/i18next-chained-backend).
 
@@ -88,7 +88,7 @@ module.exports = {
 
 ### POSSIBILITY 2: bundle translations with app
 
-#### **If you're not sure, choose this way.**
+**If you're not sure, choose this way.**
 
 i.e. for a serverless environment bundle the translations first.
 See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) and use a config like this:
