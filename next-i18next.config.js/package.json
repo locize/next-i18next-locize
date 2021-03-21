@@ -1,0 +1,5 @@
+{
+  "name": "next-i18next.config.js",
+  "browser": "./index.js",
+  "main": "./node.js"
+}

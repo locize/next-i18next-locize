@@ -38,6 +38,54 @@ module.exports = {
 }
 ```
 
+
+**Optional server side caching to filesystem**
+
+There is also the possibility to cache the translations to the local filesystem thanks to the [i18next-chained-backend](https://github.com/i18next/i18next-chained-backend).
+
+To do so, you need to control which i18next config should be used on client side and which on server side.
+
+In the [local-caching branch](https://github.com/locize/next-i18next-locize/tree/local-caching) you'll see [how the config is separated](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js).
+
+Here `next-i18next.config.js` is not a file anymore, but a folder containing:
+- [index.js](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/index.js) the original next-i18next.config.js content, which should be used on client side
+- [node.js](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/node.js) the specific config for server side only
+- [package.json](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/package.json) defining which file should be used for browser environment and which for Node.js environment
+
+The resulting [node.js](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/node.js) file basically will contain these information:
+
+```javascript
+const ChainedBackend = require('i18next-chained-backend')
+const FSBackend = require('i18next-fs-backend/cjs')
+const LocizeBackend = require('i18next-locize-backend/cjs')
+
+module.exports = {
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'de'],
+  },
+  backend: {
+    backends: [
+      FSBackend,
+      LocizeBackend
+    ],
+    backendOptions: [{ // make sure public/locales_cache/en and public/locales_cache/de exists
+      loadPath: './public/locales_cache/{{lng}}/{{ns}}.json',
+      addPath: './public/locales_cache/{{lng}}/{{ns}}.json',
+      expirationTime: 60 * 60 * 1000 // all 60 minutes the cache should be deleted
+    }, {
+      projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
+      referenceLng: 'en'
+    }]
+  },
+  use: [ChainedBackend],
+  ns: ['common', 'footer', 'second-page'], // the namespaces nees to be listed here, to make sure they got preloaded
+  serializeConfig: false, // because of the custom use i18next plugin
+  // debug: true,
+}
+```
+
+
 ### POSSIBILITY 2: bundle translations with app
 
 **If you're not sure, choose this way.**
