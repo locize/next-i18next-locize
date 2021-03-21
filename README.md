@@ -39,7 +39,7 @@ module.exports = {
 ```
 
 
-#### Optional server side caching to filesystem
+<h4>Optional server side caching to filesystem</h4>
 
 There is also the possibility to cache the translations to the local filesystem thanks to the [i18next-chained-backend](https://github.com/i18next/i18next-chained-backend).
 
