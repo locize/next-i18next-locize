@@ -8,6 +8,14 @@ This is a simple example of how to use [next-i18next](https://github.com/isaachi
 
 You may have arrived here from the [NextJs](https://github.com/zeit/next.js) repository, or the [react-i18next](https://github.com/i18next/react-i18next/) repository. Either way, for more documentation, please visit the [main README](https://github.com/isaachinman/next-i18next).
 
+### static example
+
+In case you're looking to build a static NextJs project with i18n support and are getting this error when you run `next export`:
+>Error: i18n support is not compatible with next export. See here for more info on deploying: https://nextjs.org/docs/deployment
+
+You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/example).
+
+
 ## 2 possibilities to use locize
 
 ### POSSIBILITY 1: config for locize live download usage
