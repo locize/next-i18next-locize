@@ -13,7 +13,7 @@ You may have arrived here from the [NextJs](https://github.com/zeit/next.js) rep
 In case you're looking to build a static NextJs project with i18n support and are getting this error when you run `next export`:
 >Error: i18n support is not compatible with next export. See here for more info on deploying: https://nextjs.org/docs/deployment
 
-You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/example).
+You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/examples/basic).
 
 
 ## 2 possibilities to use locize
