@@ -13,12 +13,56 @@ You may have arrived here from the [NextJs](https://github.com/zeit/next.js) rep
 In case you're looking to build a static NextJs project with i18n support and are getting this error when you run `next export`:
 >Error: i18n support is not compatible with next export. See here for more info on deploying: https://nextjs.org/docs/deployment
 
-You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/examples/basic).
+You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/examples/basic) or [this example](https://github.com/adrai/next-language-detector/tree/main/examples/client-loading).
 
 
-## 2 possibilities to use locize
+## 3 possibilities to use locize
 
-### POSSIBILITY 1: config for locize live download usage
+### POSSIBILITY 1: locize live download usage on client side only
+
+Since Next.js apps are usually deployed on serverless environments, we will use the [i18next-locize-backend plugin](https://github.com/locize/i18next-locize-backend) only on client side.
+
+Instead on server side we'll "bundle" the translations first.
+See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6).
+We're doing so to prevent an elevated amount of downloads. [Read this](https://github.com/locize/i18next-locize-backend#important-advice-for-serverless-environments---aws-lambda-google-cloud-functions-azure-functions-etc) for more information about this topic about serverless environments.
+
+Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the [cli](https://github.com/locize/locize-cli) to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
+This way the translations are bundled in your app and on server side you will not generate any downloads to the [locize CDN](https://docs.locize.com/whats-inside/cdn-content-delivery-network) during runtime, but just on client side.
+
+```javascript
+// next-i18next.config.js
+const LocizeBackend = require('i18next-locize-backend/cjs')
+const ChainedBackend= require('i18next-chained-backend').default
+const LocalStorageBackend = require('i18next-localstorage-backend').default
+
+// If you've configured caching for your locize version, you may not need the i18next-localstorage-backend and i18next-chained-backend plugin.
+// https://docs.locize.com/more/caching
+
+const isBrowser = typeof window !== 'undefined'
+
+module.exports = {
+  // debug: true,
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'de', 'it'],
+  },
+  backend: {
+    backendOptions: [{
+      expirationTime: 60 * 60 * 1000 // 1 hour
+    }, {
+      projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
+      version: 'latest'
+    }],
+    backends: isBrowser ? [LocalStorageBackend, LocizeBackend] : [],
+  },
+  serializeConfig: false,
+  use: isBrowser ? [ChainedBackend] : [],
+  // saveMissing: true // to not saveMissing to true for production
+}
+```
+
+
+### POSSIBILITY 2: config for locize live download usage
 
 This will download the translations from locize directly, in client (browser) and server (node.js)
 
@@ -96,7 +140,7 @@ module.exports = {
 ```
 
 
-### POSSIBILITY 2: bundle translations with app
+### POSSIBILITY 3: bundle translations with app
 
 **If you're not sure, choose this way.**
 
