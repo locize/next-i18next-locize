@@ -25,7 +25,7 @@ module.exports = {
   },
   serializeConfig: false,
   use: isBrowser ? [ChainedBackend] : [],
-  // saveMissing: true // to not saveMissing to true for production and also not when using the chained backend
+  // saveMissing: true // do not set saveMissing to true for production and also not when using the chained backend
 }
 
 // POSSIBILITY 2: config for locize live download usage
