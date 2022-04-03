@@ -29,6 +29,8 @@ We're doing so to prevent an elevated amount of downloads. [Read this](https://g
 Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the [cli](https://github.com/locize/locize-cli) to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
 This way the translations are bundled in your app and on server side you will not generate any downloads to the [locize CDN](https://docs.locize.com/whats-inside/cdn-content-delivery-network) during runtime, but just on client side.
 
+This approach is also handled in [this blog post](https://locize.com/blog/next-i18next/).
+
 ```javascript
 // next-i18next.config.js
 const LocizeBackend = require('i18next-locize-backend/cjs')
