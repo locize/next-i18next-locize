@@ -33,7 +33,7 @@ const SecondPage = () => {
 // the translsations are loaded via configured i18next backend.
 //
 // export const getStaticProps = async ({ locale }) => {
-//   const props = await serverSideTranslations(locale, ['common', 'footer'])
+//   const props = await serverSideTranslations(locale, ['second-page', 'footer'])
 //   return {
 //     props,
 //     // if using the approach with the live translation download, meaning using i18next-locize-backend on server side,

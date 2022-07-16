@@ -33,6 +33,13 @@ const Homepage = () => {
               {t('to-second-page')}
             </button>
           </Link>
+          <Link href='/lazy-reload-page'>
+            <button
+              type='button'
+            >
+              {t('to-lazy-reload-page')}
+            </button>
+          </Link>
         </div>
       </main>
       <Footer />
