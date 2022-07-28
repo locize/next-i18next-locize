@@ -24,7 +24,7 @@ module.exports = {
     backends: isBrowser ? [LocalStorageBackend, LocizeBackend] : [],
   },
   serializeConfig: false,
-  use: isBrowser ? [ChainedBackend] : [],
+  use: isBrowser ? [ChainedBackend/*, require('locize').locizePlugin*/] : [],
   // saveMissing: true // do not set saveMissing to true for production and also not when using the chained backend
 }
 
