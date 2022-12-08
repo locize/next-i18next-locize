@@ -15,6 +15,10 @@ In case you're looking to build a static NextJs project with i18n support and ar
 
 You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/examples/basic) or [this example](https://github.com/adrai/next-language-detector/tree/main/examples/client-loading).
 
+## If you're using Next.js 13 with app directory, follow [this blog post](https://locize.com/blog/next-13-app-dir-i18n)
+
+[![](https://locize.com/blog/next-13-app-dir-i18n/next-13-app-dir-i18n.jpg)](https://locize.com/blog/next-13-app-dir-i18n)
+
 
 ## 3 possibilities to use locize
 
