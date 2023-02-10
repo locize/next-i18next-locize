@@ -31,6 +31,7 @@ const SecondPage = () => {
 //
 // Without the getStaticProps or getServerSideProps function,
 // the translsations are loaded via configured i18next backend.
+// That works, but is not correctly rendering the server side html.
 //
 // export const getStaticProps = async ({ locale }) => {
 //   const props = await serverSideTranslations(locale, ['second-page', 'footer'])
