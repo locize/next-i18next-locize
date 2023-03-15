@@ -19,13 +19,20 @@ module.exports = {
       expirationTime: 60 * 60 * 1000 // 1 hour
     }, {
       projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
+      // apiKey: 'myApiKey', // to not add the api-key in production
       version: 'latest'
     }],
     backends: isBrowser ? [LocalStorageBackend, LocizeBackend] : [],
   },
   serializeConfig: false,
-  use: isBrowser ? [ChainedBackend/*, require('locize').locizePlugin*/] : [],
-  // saveMissing: true // do not set saveMissing to true for production and also not when using the chained backend
+  use: isBrowser ? [ChainedBackend/*, require('locize').locizePlugin, require('locize-lastused')*/] : [],
+  // locizeLastUsed: {
+  //   projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
+  //   apiKey: 'myApiKey', // to not add the api-key in production
+  //   version: 'latest',
+  //   debounceSubmit: 10000
+  // },
+  saveMissing: process.env.NODE_ENV === 'development' && isBrowser // do not set saveMissing to true for production and also not when using the chained backend
 }
 
 // POSSIBILITY 2: config for locize live download usage
