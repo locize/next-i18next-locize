@@ -6,7 +6,7 @@ const LocizeBackend = require('i18next-locize-backend/cjs')
 
 module.exports.backend = {
   debug: process.env.NODE_ENV === 'development',
-  reloadInterval: 30 * 1000,
+  // reloadInterval: 24 * 60 * 1000, // reload translations all 24h
   backends: [
     FSBackend,
     LocizeBackend
