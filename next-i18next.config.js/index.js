@@ -1,4 +1,5 @@
 module.exports = {
+  debug: process.env.NODE_ENV === 'development',
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'de'],
@@ -16,7 +17,6 @@ module.exports = {
   ],
   ns: ['common', 'footer', 'second-page'], // the namespaces needs to be listed here, to make sure they got preloaded
   serializeConfig: false, // because of the custom use i18next plugin
-  // debug: true,
   // saveMissing: true, // to not saveMissing to true for production
 }
 
