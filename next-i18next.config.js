@@ -24,6 +24,7 @@ module.exports = {
     }],
     backends: isBrowser ? [LocalStorageBackend, LocizeBackend] : [],
   },
+  partialBundledLanguages: isBrowser && true,
   serializeConfig: false,
   use: isBrowser ? [ChainedBackend/*, require('locize').locizePlugin, require('locize-lastused')*/] : [],
   // locizeLastUsed: {
