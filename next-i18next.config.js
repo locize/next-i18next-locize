@@ -8,8 +8,10 @@ const LocalStorageBackend = require('i18next-localstorage-backend').default
 
 const isBrowser = typeof window !== 'undefined'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 module.exports = {
-  debug: process.env.NODE_ENV === 'development',
+  debug: isDev,
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'de'],
@@ -26,14 +28,16 @@ module.exports = {
   },
   partialBundledLanguages: isBrowser && true,
   serializeConfig: false,
-  use: isBrowser ? [ChainedBackend/*, require('locize').locizePlugin, require('locize-lastused')*/] : [],
+  use: isBrowser ?
+    (isDev ? [ChainedBackend, /*require('locize').locizePlugin, require('locize-lastused')*/] : [ChainedBackend]) :
+    (isDev ? [/*require('locize').locizePlugin*/] : []),
   // locizeLastUsed: {
   //   projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
   //   apiKey: 'myApiKey', // to not add the api-key in production
   //   version: 'latest',
   //   debounceSubmit: 10000
   // },
-  saveMissing: process.env.NODE_ENV === 'development' && isBrowser // do not set saveMissing to true for production and also not when using the chained backend
+  saveMissing: isDev && isBrowser // do not set saveMissing to true for production and also not when using the chained backend
 }
 
 // POSSIBILITY 2: config for locize live download usage
