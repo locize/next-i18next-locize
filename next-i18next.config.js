@@ -29,8 +29,8 @@ module.exports = {
   partialBundledLanguages: isBrowser && true,
   serializeConfig: false,
   use: isBrowser ?
-    (isDev ? [ChainedBackend, /*require('locize').locizePlugin, require('locize-lastused')*/] : [ChainedBackend]) :
-    (isDev ? [/*require('locize').locizePlugin*/] : []),
+    (isDev ? [ChainedBackend, /*require('locize').locizeEditorPlugin({ show: true }), require('locize-lastused')*/] : [ChainedBackend]) :
+    (isDev ? [/*require('locize').locizeEditorPlugin({ show: true })*/] : []),
   // locizeLastUsed: {
   //   projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
   //   apiKey: 'myApiKey', // to not add the api-key in production
