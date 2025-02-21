@@ -15,9 +15,9 @@ In case you're looking to build a static NextJs project with i18n support and ar
 
 You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/examples/basic) or [this example](https://github.com/adrai/next-language-detector/tree/main/examples/client-loading).
 
-## If you're using Next.js 13 with app directory, follow [this blog post](https://locize.com/blog/next-13-app-dir-i18n)
+## If you're using Next.js 13 with app directory, follow [this blog post](https://www.locize.com/blog/next-app-dir-i18n)
 
-[![](https://locize.com/blog/next-13-app-dir-i18n/next-13-app-dir-i18n.jpg)](https://locize.com/blog/next-13-app-dir-i18n)
+[![](https://cdn.prod.website-files.com/67a323e323a50df7f24f0a94/67ab23a11128dcf4b9533ed0_next-app-dir-i18n.jpg)](https://www.locize.com/blog/next-app-dir-i18n)
 
 
 ## 3 possibilities to use locize
@@ -31,9 +31,9 @@ See [downloadLocales script in package.json](https://github.com/locize/next-i18n
 We're doing so to prevent an elevated amount of downloads. [Read this](https://github.com/locize/i18next-locize-backend#important-advice-for-serverless-environments---aws-lambda-google-cloud-functions-azure-functions-etc) for more information about this topic about serverless environments.
 
 Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the [cli](https://github.com/locize/locize-cli) to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
-This way the translations are bundled in your app and on server side you will not generate any downloads to the [locize CDN](https://docs.locize.com/whats-inside/cdn-content-delivery-network) during runtime, but just on client side.
+This way the translations are bundled in your app and on server side you will not generate any downloads to the [locize CDN](https://www.locize.com/docs/cdn-content-delivery-network) during runtime, but just on client side.
 
-This approach is also handled in [this blog post](https://locize.com/blog/next-i18next/).
+This approach is also handled in [this blog post](https://locize.com/blog/next-i18next).
 
 ```javascript
 // next-i18next.config.js
@@ -42,7 +42,7 @@ const ChainedBackend= require('i18next-chained-backend').default
 const LocalStorageBackend = require('i18next-localstorage-backend').default
 
 // If you've configured caching for your locize version, you may not need the i18next-localstorage-backend and i18next-chained-backend plugin.
-// https://docs.locize.com/more/caching
+// https://www.locize.com/docs/caching
 
 const isBrowser = typeof window !== 'undefined'
 
