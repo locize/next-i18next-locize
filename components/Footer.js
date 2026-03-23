@@ -1,5 +1,5 @@
 import pkg from 'next-i18next/package.json'
-import { useTranslation } from 'next-i18next'
+import { useTranslation } from 'next-i18next/pages'
 
 export const Footer = () => {
 

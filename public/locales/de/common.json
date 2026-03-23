@@ -4,5 +4,6 @@
   "error-without-status": "Auf dem Server ist ein Fehler aufgetreten",
   "h1": "Ein einfaches Beispiel",
   "to-second-page": "Zur zweiten Seite",
-  "to-lazy-reload-page": "Zur Lazy-Reload Seite"
+  "to-app-router": "Zum App Router Bereich",
+  "to-pages-router": "Zum Pages Router Bereich"
 }

@@ -3,24 +3,23 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "downloadLocales": "locize download --project-id=d3b405cf-2532-46ae-adb8-99e88d876733 --ver=latest --clean=true --path=./public/locales",
-    "dev": "next",
+    "downloadLocales": "locize download --project-id=d3b405cf-2532-46ae-adb8-99e88d876733 --cdn-type=pro --ver=latest --clean=true --path=./public/locales",
+    "dev": "next dev",
     "build": "next build",
     "start": "npm run build && next start -p ${PORT:=3000}"
   },
   "dependencies": {
-    "i18next": "23.7.6",
-    "i18next-chained-backend": "4.6.2",
-    "i18next-localstorage-backend": "4.2.0",
-    "i18next-locize-backend": "6.4.1",
-    "next": "14.0.3",
-    "next-i18next": "15.0.0",
-    "prop-types": "15.8.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-i18next": "13.5.0"
+    "i18next": "^25.10.3",
+    "i18next-chained-backend": "^5.0.2",
+    "i18next-localstorage-backend": "^4.3.1",
+    "i18next-locize-backend": "^6.4.1",
+    "next": "^16.2.1",
+    "next-i18next": "^16.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-i18next": "^16.6.0"
   },
   "devDependencies": {
-    "locize-cli": "7.14.13"
+    "locize-cli": "^12.0.9"
   }
 }

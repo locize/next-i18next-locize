@@ -2,166 +2,64 @@
 
 ## What is this?
 
-This is a simple example of how to use [next-i18next](https://github.com/i18next/next-i18next) with [NextJs](https://github.com/zeit/next.js) and [locize](https://locize.com) to get translations up and running quickly and easily.
+This is an example of how to use [next-i18next](https://github.com/i18next/next-i18next) v16 with [Next.js](https://nextjs.org) and [Locize](https://www.locize.com) to get translations up and running quickly and easily.
+
+It demonstrates both the **App Router** and the **Pages Router** in a single project using the `basePath` option for mixed-router setups.
 
 ## For more info...
 
-You may have arrived here from the [NextJs](https://github.com/zeit/next.js) repository, or the [react-i18next](https://github.com/i18next/react-i18next/) repository. Either way, for more documentation, please visit the [main README](https://github.com/i18next/next-i18next).
+- [next-i18next v16 blog post](https://www.locize.com/blog/next-i18next-v16) — full setup guide
+- [next-i18next README](https://github.com/i18next/next-i18next) — API reference and examples
+- [next-i18next v16 examples](https://github.com/i18next/next-i18next/tree/master/examples) — more example projects
 
-### static example
+## How it works
 
-In case you're looking to build a static NextJs project with i18n support and are getting this error when you run `next export`:
->Error: i18n support is not compatible with next export. See here for more info on deploying: https://nextjs.org/docs/deployment
+### App Router (`/app-router/[locale]/`)
 
-You may have a look at [this example](https://github.com/adrai/next-language-detector/tree/main/examples/basic) or [this example](https://github.com/adrai/next-language-detector/tree/main/examples/client-loading).
+- **Server Components** use `getT()` from `next-i18next/server` to load translations from the filesystem (bundled via `resourceLoader`)
+- **Client Components** use `I18nProvider` with `i18next-locize-backend` + `i18next-chained-backend` + `i18next-localstorage-backend` for live translation downloads with localStorage caching
+- **Proxy** (`proxy.js`) handles language detection and routing, scoped to `/app-router/*` via `basePath`
 
-## If you're using Next.js 13 with app directory, follow [this blog post](https://www.locize.com/blog/next-app-dir-i18n)
+### Pages Router (`/`)
 
-[![](https://cdn.prod.website-files.com/67a323e323a50df7f24f0a94/67ab23a11128dcf4b9533ed0_next-app-dir-i18n.jpg)](https://www.locize.com/blog/next-app-dir-i18n)
+- Uses the familiar `appWithTranslation` / `serverSideTranslations` API via `next-i18next/pages`
+- Client-side translation reloading via `i18next-locize-backend` with chained backend
+- Server-side translations bundled from `public/locales/` (downloaded via `locize-cli`)
 
+### Locize integration
 
-## 3 possibilities to use locize
+Translations are managed in [Locize](https://locize.com) and synced to the project:
 
-### POSSIBILITY 1: locize live download usage on client side only
+1. **At build time**: `npm run downloadLocales` downloads translations from Locize to `public/locales/` via [locize-cli](https://github.com/locize/locize-cli)
+2. **At runtime (client)**: `i18next-locize-backend` fetches fresh translations from the Locize CDN with localStorage caching (1 hour expiration)
 
-Since Next.js apps are usually deployed on serverless environments, we will use the [i18next-locize-backend plugin](https://github.com/locize/i18next-locize-backend) only on client side.
+This approach is ideal for serverless deployments — translations are bundled at build time, so no server-side HTTP requests are needed. The client can still get fresh translations from Locize.
 
-Instead on server side we'll "bundle" the translations first.
-See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6).
-We're doing so to prevent an elevated amount of downloads. [Read this](https://github.com/locize/i18next-locize-backend#important-advice-for-serverless-environments---aws-lambda-google-cloud-functions-azure-functions-etc) for more information about this topic about serverless environments.
+## Setup
 
-Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the [cli](https://github.com/locize/locize-cli) to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
-This way the translations are bundled in your app and on server side you will not generate any downloads to the [locize CDN](https://www.locize.com/docs/cdn-content-delivery-network) during runtime, but just on client side.
-
-This approach is also handled in [this blog post](https://locize.com/blog/next-i18next).
-
-```javascript
-// next-i18next.config.js
-const LocizeBackend = require('i18next-locize-backend/cjs')
-const ChainedBackend= require('i18next-chained-backend').default
-const LocalStorageBackend = require('i18next-localstorage-backend').default
-
-// If you've configured caching for your locize version, you may not need the i18next-localstorage-backend and i18next-chained-backend plugin.
-// https://www.locize.com/docs/caching
-
-const isBrowser = typeof window !== 'undefined'
-
-module.exports = {
-  // debug: true,
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'de', 'it'],
-  },
-  backend: {
-    backendOptions: [{
-      expirationTime: 60 * 60 * 1000 // 1 hour
-    }, {
-      projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
-      version: 'latest'
-    }],
-    backends: isBrowser ? [LocalStorageBackend, LocizeBackend] : [],
-  },
-  serializeConfig: false,
-  use: isBrowser ? [ChainedBackend] : [],
-  // saveMissing: true // to not saveMissing to true for production
-}
+```bash
+npm install
+npm run downloadLocales  # download translations from Locize
+npm run dev
 ```
 
+- Pages Router: [http://localhost:3000](http://localhost:3000)
+- App Router: [http://localhost:3000/app-router/en](http://localhost:3000/app-router/en)
 
-### POSSIBILITY 2: config for locize live download usage
+## Configuration
 
-This will download the translations from locize directly, in client (browser) and server (node.js)
+### `next-i18next.config.js` (Pages Router)
 
-**DO NOT USE THIS if having a serverless environment => this will generate too much download requests!**
+Uses `i18next-locize-backend` on the client side with `i18next-chained-backend` for localStorage caching. Server side uses bundled translations from `public/locales/`.
 
-More informations about this [here](https://github.com/locize/i18next-locize-backend#important-advice-for-serverless-environments---aws-lambda-google-cloud-functions-azure-functions-etc)
+### `i18n.config.js` (App Router)
 
-```javascript
-// next-i18next.config.js
-module.exports = {
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'de'],
-  },
-  backend: {
-    projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
-    // apiKey: 'myApiKey', // to not add the api-key in production, used for saveMissing feature
-    referenceLng: 'en'
-  },
-  use: [
-    require('i18next-locize-backend/cjs')
-  ],
-  ns: ['common', 'footer', 'second-page'], // the namespaces needs to be listed here, to make sure they got preloaded
-  serializeConfig: false, // because of the custom use i18next plugin
-  // debug: true,
-  // saveMissing: true, // to not saveMissing to true for production
-}
-```
+Uses `resourceLoader` with dynamic imports for server-side loading. Client-side uses `I18nProviderWithLocize` wrapper that configures the chained backend with Locize.
 
+### `proxy.js`
 
-<h4>Optional server side caching to filesystem</h4>
+Handles language detection and routing for App Router pages, scoped to `/app-router/*` via `basePath: '/app-router'`.
 
-There is also the possibility to cache the translations to the local filesystem thanks to the [i18next-chained-backend](https://github.com/i18next/i18next-chained-backend).
+## Locize project
 
-To do so, you need to control which i18next config should be used on client side and which on server side.
-
-In the [local-caching branch](https://github.com/locize/next-i18next-locize/tree/local-caching) you'll see [how the config is separated](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js).
-
-Here `next-i18next.config.js` is not a file anymore, but a folder containing:
-- [index.js](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/index.js) the original next-i18next.config.js content, which should be used on client side
-- [node.js](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/node.js) the specific config for server side only
-- [package.json](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/package.json) defining which file should be used for browser environment and which for Node.js environment
-
-The resulting [node.js](https://github.com/locize/next-i18next-locize/tree/local-caching/next-i18next.config.js/node.js) file basically will contain these information:
-
-```javascript
-const ChainedBackend = require('i18next-chained-backend')
-const FSBackend = require('i18next-fs-backend/cjs')
-const LocizeBackend = require('i18next-locize-backend/cjs')
-
-module.exports = {
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'de'],
-  },
-  backend: {
-    backends: [
-      FSBackend,
-      LocizeBackend
-    ],
-    backendOptions: [{ // make sure public/locales_cache/en and public/locales_cache/de exists
-      loadPath: './public/locales_cache/{{lng}}/{{ns}}.json',
-      addPath: './public/locales_cache/{{lng}}/{{ns}}.json',
-      expirationTime: 60 * 60 * 1000 // all 60 minutes the cache should be deleted
-    }, {
-      projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
-      referenceLng: 'en'
-    }]
-  },
-  use: [ChainedBackend],
-  ns: ['common', 'footer', 'second-page'], // the namespaces needs to be listed here, to make sure they got preloaded
-  serializeConfig: false, // because of the custom use i18next plugin
-  // debug: true,
-}
-```
-
-
-### POSSIBILITY 3: bundle translations with app
-
-**If you're not sure, choose this way.**
-
-i.e. for a serverless environment bundle the translations first.
-See [downloadLocales script in package.json](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) and use a config like this:
-
-```javascript
-// next-i18next.config.js
-module.exports = {
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'de'],
-  }
-}
-```
-
-Before "deploying" your app, you can run the [downloadLocales script](https://github.com/locize/next-i18next-locize/blob/main/package.json#L6) (or similar), which will use the [cli](https://github.com/locize/locize-cli) to download the translations from locize into the appropriate folder next-i18next is looking in to (i.e. ./public/locales).
-This way the translations are bundled in your app and you will not generate any downloads during runtime.
+This example uses the Locize project ID `d3b405cf-2532-46ae-adb8-99e88d876733`. Replace it with your own project ID to use your own translations.
